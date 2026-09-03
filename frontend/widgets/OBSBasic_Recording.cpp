@@ -112,6 +112,10 @@ void OBSBasic::AutoRemux(QString input, bool no_show)
 
 void OBSBasic::StartRecording()
 {
+	QMessageBox::information(this, "Funzione disabilitata",
+		"La registrazione locale è disattivata per politica Aziendale ULSS5 Polesana.");
+	return;
+
 	if (outputHandler->RecordingActive()) {
 		return;
 	}

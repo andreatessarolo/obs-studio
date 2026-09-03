@@ -103,12 +103,28 @@
          </property>
         </spacer>
        </item>
-       <item>
+              <item>
         <widget class="QLabel" name="info">
          <property name="text">
           <string>About.Info</string>
          </property>
          <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="companyInfo">
+         <property name="text">
+          <string notr="true">Company Info</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+         <property name="textFormat">
+          <enum>Qt::TextFormat::RichText</enum>
+         </property>
+         <property name="openExternalLinks">
           <bool>true</bool>
          </property>
         </widget>

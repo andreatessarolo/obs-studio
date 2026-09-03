@@ -50,6 +50,9 @@
 #include <nlohmann/json.hpp>
 #include <QDesktopServices>
 
+#include <QInputDialog>
+#include <QCryptographicHash>
+
 #ifdef _WIN32
 #include <sstream>
 #endif
@@ -197,6 +200,29 @@ void OBSBasic::on_actionRemux_triggered()
 	remux = remuxDlg;
 }
 
+bool OBSBasic::CheckAdminPassword()
+{
+	// Hash SHA-256 della password admin, generato con:
+	// echo -n "TuaPasswordSegreta" | sha256sum   (Linux/macOS/Git Bash)
+	// oppure con PowerShell: Get-FileHash -Algorithm SHA256 -InputStream ([IO.MemoryStream]::new([Text.Encoding]::UTF8.GetBytes("TuaPasswordSegreta")))
+	static const QString kAdminPasswordHash = "13BCEF12EBB9E3AAF207D778E8024FCE6DCB49E6403AB2A5DCC1700AA514B616";
+
+	bool ok;
+	QString pwd = QInputDialog::getText(this, "Accesso riservato", "Inserire password amministratore:",
+					     QLineEdit::Password, "", &ok);
+
+	if (!ok)
+		return false;
+
+	QString hash = QCryptographicHash::hash(pwd.toUtf8(), QCryptographicHash::Sha256).toHex();
+
+	if (hash.compare(kAdminPasswordHash, Qt::CaseInsensitive) != 0) {
+		QMessageBox::warning(this, "Accesso negato", "Password errata.");
+		return false;
+	}
+	return true;
+}
+
 void OBSBasic::on_action_Settings_triggered()
 {
 	static bool settings_already_executing = false;
@@ -214,6 +240,11 @@ void OBSBasic::on_action_Settings_triggered()
 	}
 
 	settings_already_executing = true;
+
+	if (!CheckAdminPassword()) {
+		settings_already_executing = false;
+		return;
+	}
 
 	{
 		OBSBasicSettings settings(this);

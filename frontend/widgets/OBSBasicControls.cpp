@@ -1,6 +1,7 @@
 #include "OBSBasicControls.hpp"
 #include "OBSBasic.hpp"
 #include "qt-wrappers.hpp"
+#include <QMessageBox>
 
 #include "moc_OBSBasicControls.cpp"
 
@@ -22,7 +23,12 @@ OBSBasicControls::OBSBasicControls(OBSBasic *main) : QFrame(nullptr), ui(new Ui:
 		ui->broadcastButton, &QPushButton::clicked, this, [this]() { emit this->BroadcastButtonClicked(); },
 		Qt::DirectConnection);
 	connect(
-		ui->recordButton, &QPushButton::clicked, this, [this]() { emit this->RecordButtonClicked(); },
+		ui->recordButton, &QPushButton::clicked, this,
+		[this]() {
+			QMessageBox::information(this, "Funzione disabilitata",
+				"La registrazione locale è disattivata per politica Aziendale ULSS5 Polesana.");
+			// emit this->RecordButtonClicked(); // disattivato intenzionalmente
+		},
 		Qt::DirectConnection);
 	connect(
 		ui->pauseRecordButton, &QPushButton::clicked, this, [this]() { emit this->PauseRecordButtonClicked(); },
@@ -59,6 +65,7 @@ OBSBasicControls::OBSBasicControls(OBSBasic *main) : QFrame(nullptr), ui(new Ui:
 
 	/* Set up default visibility */
 	ui->broadcastButton->setVisible(false);
+	ui->recordButton->setVisible(false);
 	ui->pauseRecordButton->setVisible(false);
 	ui->replayBufferButton->setVisible(false);
 	ui->saveReplayButton->setVisible(false);

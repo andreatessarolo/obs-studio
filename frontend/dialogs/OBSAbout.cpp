@@ -29,7 +29,18 @@ OBSAbout::OBSAbout(QWidget *parent) : QDialog(parent), ui(new Ui::OBSAbout)
 
 	QString ver = obs_get_version_string();
 
+	ui->name->setText("OBS Studio AULSS5");
+
 	ui->version->setText(ver + bitness);
+
+	ui->companyInfo->setText(
+		"<p style=\"margin-top:8px;\">"
+		"<br/><b>Azienda ULSS5 Polesana</b><br/>"
+		"Applicativo Custom per uso interno aziendale<br/>"
+		"Versione: <b>v1.0</b><br/>"
+		"Autore: <b>Andrea Tessarolo</b><br/>"
+		"Assistenza: <a href='mailto:andrea.tessarolo@aulss5.veneto.it'>andrea.tessarolo@aulss5.veneto.it</a>"
+		"</p>");
 
 	ui->contribute->setText(QTStr("About.Contribute"));
 

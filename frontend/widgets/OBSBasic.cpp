@@ -74,6 +74,10 @@
 
 #include "moc_OBSBasic.cpp"
 
+#include <QMessageBox>
+#include <QInputDialog>
+#include <QCryptographicHash>
+
 using namespace std;
 
 extern bool portable_mode;

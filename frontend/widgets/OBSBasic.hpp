@@ -618,7 +618,10 @@ private slots:
 
 	void on_actionFullscreenInterface_triggered();
 	void on_actionRemux_triggered();
+
+	bool CheckAdminPassword();
 	void on_action_Settings_triggered();
+	
 	void on_actionShowMacPermissions_triggered();
 	void on_actionShowLogs_triggered();
 	void on_actionUploadCurrentLog_triggered();
